@@ -179,7 +179,31 @@ A comprehensive research paper is available at **[reports/研究论文.md](repor
 - Introduction and literature review (Browne 1987, Brinson 1986, Fama-French 2015, Liu-Stambaugh-Yuan 2019)
 - Data sources and methodology
 - Full 11-group backtest results with discussion
-- Practical implications for A-share investors
+- **Phase 2: Holding period analysis** (1/3/6/12/24 months, ~40,000 entry points)
+- 10 academic references
+
+---
+
+## 📊 Phase 2: Holding Period Analysis
+
+**Core question:** How long must you hold for a high probability of profit?
+
+![Win Rate Heatmap](charts2/win_rate_heatmap.png)
+
+| Period | Best US (S&P 500) | Best A-Share (Low Vol Div) |
+|:------:|:-----------------:|:--------------------------:|
+| 1 month | 64.0% ✅ | 61.2% ✅ |
+| 3 months | 73.1% ✅ | 69.8% ✅ |
+| 6 months | 79.1% ✅ | 75.0% ✅ |
+| 12 months | 85.6% ✅ | 79.4% ✅ |
+| **24 months** | **92.9% 🏆** | **91.7% 🏆** |
+
+**Key findings:**
+- **Win rates rise monotonically** with holding period across all 11 groups
+- **Low Vol Dividend** leads A-shares at 91.7% (24 months) — rivaling US portfolios
+- **Not a short-term tool** — 1-month win rates are 50-64% (near coin-flip)
+- **Hold ≥12 months** for >65% win rate on all A-share groups (ex STAR 50)
+- Full report: [reports/持有期分析报告.md](reports/持有期分析报告.md) (Chinese)
 - 10 academic references
 
 ---
