@@ -69,6 +69,37 @@ Rank  Group            Return     CAGR    MaxDD   Sharpe
 
 ---
 
+## 📊 Visual Summary
+
+### Return Comparison
+
+![Return Bar Chart](charts/return_bar_compare.png)
+
+The bar chart above shows average cumulative returns across all 11 groups. Nasdaq 100 leads at +174.9%, followed by S&P 500 (+168.8%). Among China A-share groups, ChiNext (创业板指) stands out at +112.0% with a drawdown of only 12.0% — roughly half of the US groups' drawdown.
+
+### Risk-Adjusted Performance (Sharpe Ratio)
+
+![Sharpe Ratio Comparison](charts/sharpe_compare.png)
+
+STAR 50 (科创50) achieves the highest Sharpe ratio at 1.17, despite having the lowest absolute return (+54.1%). ChiNext and Nasdaq 100 follow closely. Notably, A-share portfolios deliver competitive risk-adjusted returns versus their US counterparts.
+
+### Risk-Return Profile
+
+![Risk-Return Scatter](charts/risk_return_scatter.png)
+
+The scatter plot maps all 11 portfolios on a risk-return plane (annual return vs. max drawdown, colored by Sharpe ratio). The ideal location is the upper-left corner (high return, low drawdown, high Sharpe). Key observations:
+- **ChiNext** and **Low Vol Dividend** occupy the premium zone (high Sharpe + low drawdown)
+- **US groups** deliver higher absolute returns but with significantly larger drawdowns (right side)
+- **CSI 300** and **CSI Dividend** sit in the balanced middle ground
+
+### Distribution of Returns Across Entry Points
+
+![Return Distribution](charts/distribution_compare.png)
+
+All portfolios show right-skewed return distributions — most entry points cluster around the median with a long tail of high returns from early entries (post-crisis bottoms of 2003/2009).
+
+---
+
 ## 📁 Directory Structure
 
 ```
