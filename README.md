@@ -22,6 +22,23 @@
 | Trading cost | 0.1% per rebalance |
 | Data sources | Yahoo Finance (US) / akshare + Tushare (China) / MySQL (existing) |
 
+---
+
+## 💡 What is the Permanent Portfolio?
+
+Created by **Harry Browne** in his 1987 book *Fail-Safe Investing*, the Permanent Portfolio is a **4-way equal-weight** strategy designed to perform well in any economic environment:
+
+| Asset | Allocation | Purpose | Performs best in |
+|-------|:----------:|---------|------------------|
+| Stocks | **25%** | Growth | Prosperity (growth) |
+| Long-term Bonds | **25%** | Income & deflation hedge | Recession (falling rates) |
+| Gold | **25%** | Inflation hedge | Inflation (rising prices) |
+| Cash (T-bills) | **25%** | Stability & optionality | Contraction (liquidity crisis) |
+
+The magic comes from **rebalancing**: when one asset surges, you trim it and buy the laggards — automatically buying low and selling high. No market timing, no stock picking, no economic forecasts needed.
+
+> **Key question:** Does this simple formula — which worked brilliantly in the US since the 1970s — also work in China's A-share market, which has higher volatility, retail dominance, and a different economic structure?
+
 ### US Portfolio Groups
 
 | Group | Stocks (25%) | Bonds (25%) | Gold (25%) | Cash (25%) | Principal |
