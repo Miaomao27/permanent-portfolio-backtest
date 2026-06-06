@@ -223,3 +223,11 @@ python3 scripts/gen_summary_11.py
 # 5. 生成图表
 python3 scripts/gen_charts_11.py
 ```
+
+---
+
+## 📜 许可协议
+
+MIT License © 2026 Miaomao27
+
+本项目仅供研究和教育用途。回测结果不构成投资建议。历史表现不代表未来收益。详见 [LICENSE](LICENSE)。

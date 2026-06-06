@@ -233,4 +233,6 @@ A comprehensive research paper is available at **[reports/研究论文.md](repor
 
 ## 📜 License
 
-This project is for research and educational purposes only. The backtest results do not constitute investment advice. Past performance does not guarantee future returns.
+MIT License © 2026 Miaomao27
+
+This project is for research and educational purposes only. The backtest results do not constitute investment advice. Past performance does not guarantee future returns. See [LICENSE](LICENSE) for full terms.
