@@ -1,7 +1,11 @@
 # Permanent Portfolio Daily Backtest — China A-Share & US Markets
 
-> A comprehensive validation of Harry Browne's Permanent Portfolio (25% stocks + 25% long-term bonds + 25% gold + 25% cash) across different markets and entry timings.
+> Can you invest on **any random day** and still come out ahead?  
+> How long must you hold a permanent portfolio to have **>90% chance of profit**?  
+> Does the "25% stocks + 25% bonds + 25% gold + 25% cash" formula work in **China A-shares**?
 >
+> This project answers these questions with a daily-frequency backtest of **11 portfolio groups** across **~40,000 entry points** over 23 years (2003–2026).
+
 > **📄 Research paper:** [reports/研究论文.md](reports/研究论文.md) (Chinese, with 10 academic references)
 > **📖 中文版:** [README_ZH.md](README_ZH.md)
 
