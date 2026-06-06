@@ -10,10 +10,16 @@ RES2 = os.path.join(BASE, 'results2')
 CHARTS2 = os.path.join(BASE, 'charts2')
 os.makedirs(CHARTS2, exist_ok=True)
 
-zh_fonts = [f for f in font_manager.findSystemFonts() if any(n in f.lower() for n in ['noto','wqy','simsun','simhei','source','droid','cjk'])]
+zh_fonts = [f for f in font_manager.findSystemFonts() if any(n in f.lower() for n in ['notosanscjk','notoserifcjk','droid','wenquan','wqy'])]
 if zh_fonts:
-    prop = font_manager.FontProperties(fname=zh_fonts[0])
+    preferred = [f for f in zh_fonts if 'notosanscjk' in f.lower() and 'regular' in f.lower()]
+    if not preferred:
+        preferred = [f for f in zh_fonts if 'droid' in f.lower()]
+    if not preferred:
+        preferred = zh_fonts
+    prop = font_manager.FontProperties(fname=preferred[0])
     plt.rcParams['font.family'] = prop.get_name()
+    print(f"Using font: {preferred[0]} -> {prop.get_name()}")
 plt.rcParams['axes.unicode_minus'] = False
 
 groups = ['sp500','nasdaq','china','china_000016_SH','china_000688_SH','china_000852_SH',
