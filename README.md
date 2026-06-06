@@ -186,7 +186,9 @@ A comprehensive research paper is available at **[reports/研究论文.md](repor
 
 ## 📊 Phase 2: Holding Period Analysis
 
-**Core question:** How long must you hold for a high probability of profit?
+**Core question:** How long must you hold the **permanent portfolio** for a high probability of profit?
+
+> All data below refers to the **permanent portfolio** (25% stocks + 25% bonds + 25% gold + 25% cash), NOT the underlying stock index itself.
 
 ![Win Rate Heatmap](charts2/win_rate_heatmap.png)
 
