@@ -74,15 +74,19 @@ def gen_boxplot(group_key, group_name):
     ax.set_title(f'{group_name}永久组合——不同持有期收益分布', fontsize=14, fontweight='bold')
     ax.grid(alpha=0.2, axis='y')
 
-    # 标注中位数、Q1、Q3
+    # 标注中位数、Q1、Q3（放在箱体上方，不遮挡）
     for i, d in enumerate(data_all):
         q1, q50, q75 = np.percentile(d, [25, 50, 75])
         mean = np.mean(d)
-        y_pos = q75 + (np.max(d) - q75) * 0.3
+        # 计算上须位置（箱线图默认上须 = min(max(d), Q3+1.5*IQR)）
+        iqr = q75 - q1
+        upper_whisker = min(np.max(d), q75 + 1.5 * iqr)
+        anno_y = upper_whisker + (np.max(d) - upper_whisker) * 0.15 + abs(upper_whisker) * 0.05
         anno_text = f'Q1={q1:.1f}%  Md={q50:.1f}%  Q3={q75:.1f}%\n均值={mean:.2f}%  胜率={(d>0).mean()*100:.1f}%'
-        ax.annotate(anno_text, xy=(i+1, q75), fontsize=7.5,
-                    bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.8),
-                    ha='center', va='bottom')
+        ax.annotate(anno_text, xy=(i+1, q75), xytext=(i+1, anno_y), fontsize=7.5,
+                    bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.8, edgecolor='gray'),
+                    ha='center', va='bottom',
+                    arrowprops=dict(arrowstyle='->', color='gray', lw=0.5))
 
     fig_path = os.path.join(CHARTS_DIR, f'{group_key}_boxplot.png')
     fig.tight_layout()
