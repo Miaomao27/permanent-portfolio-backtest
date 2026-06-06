@@ -2,7 +2,7 @@
 
 > A comprehensive validation of Harry Browne's Permanent Portfolio (25% stocks + 25% long-term bonds + 25% gold + 25% cash) across different markets and entry timings.
 >
-> **📄 Research paper:** [reports/research_paper.md](reports/research_paper.md) (Chinese, with academic references)
+> **📄 Research paper:** [reports/研究论文.md](reports/研究论文.md) (Chinese, with 10 academic references)
 > **📖 中文版:** [README_ZH.md](README_ZH.md)
 
 ---
@@ -143,7 +143,7 @@ permanent-portfolio-backtest/
 │   ├── sharpe_compare.png           # Sharpe ratio comparison
 │   └── risk_return_scatter.png      # Risk-return scatter
 ├── reports/
-│   ├── research_paper.md            # Full research paper (Chinese, 10 references)
+│   ├── 研究论文.md            # Full research paper (Chinese, 10 references)
 │   └── analysis_report.md           # Chinese analysis report
 └── scripts/                          # Backtest & analysis scripts
     ├── backtest_full.py             # Original full engine
@@ -175,7 +175,7 @@ python3 scripts/gen_charts_11.py
 
 ## 📄 Research Paper
 
-A comprehensive research paper is available at **[reports/research_paper.md](reports/research_paper.md)** (Chinese), covering:
+A comprehensive research paper is available at **[reports/研究论文.md](reports/研究论文.md)** (Chinese), covering:
 - Introduction and literature review (Browne 1987, Brinson 1986, Fama-French 2015, Liu-Stambaugh-Yuan 2019)
 - Data sources and methodology
 - Full 11-group backtest results with discussion
