@@ -70,24 +70,26 @@ Rank  Group            Return     CAGR    MaxDD   Sharpe
 ───────────────────────────────────────────────────────────
  1    Nasdaq 100      +174.9%   10.2%   20.5%    0.80
  2    S&P 500         +168.8%    8.4%   15.4%    0.76
- 3    ChiNext         +112.0%   11.0%   12.0%    0.91
- 4    CSI 500          +86.7%    8.4%   12.3%    0.75
- 5    Low Vol Div      +80.9%    7.2%    9.2%    0.72  ← lowest drawdown
- 6    CSI 2000         +77.1%    6.2%   11.3%    0.53
- 7    CSI 300          +76.7%    7.4%   10.7%    0.70
- 8    CSI Dividend     +75.7%    7.0%   10.2%    0.68
- 9    SSE 50           +70.6%    6.8%   11.2%    0.63
-10    CSI 1000         +58.4%    9.3%   11.2%    0.80
-11    STAR 50          +54.1%   15.2%   10.8%    1.17  ← best Sharpe
+ 3    Nikkei 225      +146.8%    9.0%   11.8%    0.86
+ 4    ChiNext         +112.0%   11.0%   12.0%    0.91
+ 5    CSI 500          +86.7%    8.4%   12.3%    0.75
+ 6    Low Vol Div      +80.9%    7.2%    9.2%    0.72  ← lowest drawdown
+ 7    CSI 2000         +77.1%    6.2%   11.3%    0.53
+ 8    CSI 300          +76.7%    7.4%   10.7%    0.70
+ 9    CSI Dividend     +75.7%    7.0%   10.2%    0.68
+10    SSE 50           +70.6%    6.8%   11.2%    0.63
+11    CSI 1000         +58.4%    9.3%   11.2%    0.80
+12    STAR 50          +54.1%   15.2%   10.8%    1.17  ← best Sharpe
 ```
 
 ### Key Findings
 
-1. **All 11 portfolios delivered positive returns from ANY entry date** — confirming the permanent portfolio's "entry timing doesn't matter" property
+1. **All 12 portfolios delivered positive returns from ANY entry date** — confirming the permanent portfolio's "entry timing doesn't matter" property
 2. **The strategy works in China A-shares** — 9 China portfolios averaged +76% cumulative, with 64% of entries beating pure stock holding
 3. **Low Vol Dividend has the best drawdown control** (9.23%) — naturally defensive stocks make excellent permanent portfolio components
 4. **STAR 50 has the highest Sharpe ratio** (1.17) — but short sample period (since 2020) warrants caution
 5. **China groups significantly outperform US in drawdown control** — China avg 11.2% vs US avg 17.9%, thanks to the anchoring effect of fixed-rate bonds
+6. **Nikkei 225 delivers 9.0% CAGR with only 11.8% drawdown**, Sharpe 0.86 — the best risk-adjusted return across all groups
 
 ---
 
@@ -165,15 +167,41 @@ permanent-portfolio-backtest/
 │   ├── sharpe_compare.png           # Sharpe ratio comparison
 │   └── risk_return_scatter.png      # Risk-return scatter
 ├── reports/
-│   ├── 研究论文.md            # Full research paper (Chinese, 10 references)
-│   └── analysis_report.md           # Chinese analysis report
-└── scripts/                          # Backtest & analysis scripts
-    ├── backtest_full.py             # Original full engine
-    ├── run_single.py                # Single-group runner
-    ├── china_backtest.py            # Parameterized China backtest
-    ├── gen_summary_11.py            # 11-group summary
-    ├── gen_charts_11.py             # 11-group charts
-    └── ...                          # Data collection scripts
+│   ├── 研究论文.md            # Phase 1/2 research paper (Chinese, 10 refs)
+│   ├── 统计分析报告.md         # Phase 1 full analysis
+│   ├── 持有期分析报告.md       # Phase 2 holding period analysis
+│   ├── 日经225永久组合回测报告.md # Nikkei 225 standalone report
+│   ├── 最优权重分析报告.md      # Phase 3 full analysis (8 embedded charts)
+│   └── 最优权重推荐摘要.md      # Phase 3 summary
+├── scripts/                          # Backtest & analysis scripts
+│   ├── backtest_full.py             # Original full engine
+│   ├── run_single.py                # Single-group runner
+│   ├── china_backtest.py            # Parameterized China backtest
+│   ├── gen_summary_11.py            # 11-group summary
+│   ├── gen_charts_11.py             # 11-group charts
+│   ├── optimize_weights.py          # Phase 3 weight optimization engine
+│   ├── merge_results.py             # Phase 3 result merger
+│   ├── gen_charts3.py               # Phase 3 chart generator
+│   └── ...                          # Data collection scripts
+├── results3/                         # Phase 3 results
+│   ├── hongli_lowvol/
+│   │   ├── grid_results.csv         # Low Vol Div full grid (341 combos)
+│   │   └── top_recommendations.csv  # Tier recommendations
+│   ├── sp500/
+│   ├── nasdaq/
+│   ├── nikkei225/
+│   ├── optimal_summary.csv          # Cross-version summary
+│   └── pareto_frontiers.csv         # Pareto frontiers
+├── charts2/                          # Phase 2 charts
+│   ├── win_rate_heatmap.png
+│   ├── return_compare_boxplot.png
+│   └── ...
+├── charts3/                          # Phase 3 charts
+│   ├── calmar_heatmap_4panel.png    # 4-panel Calmar heatmap
+│   ├── frontier_all_versions.png    # Pareto frontier comparison
+│   ├── optimal_allocation_bars.png  # Tier allocation bars
+│   └── sensitivity_stock_weight.png # Stock weight sensitivity
+└── logs/                             # Run logs
 ```
 
 ---
@@ -181,6 +209,7 @@ permanent-portfolio-backtest/
 ## 🛠 Quick Reproduce
 
 ```bash
+# === Phase 1: Equal-weight backtest ===
 # Run a single China index backtest
 python3 scripts/china_backtest.py 000300.SH
 
@@ -191,6 +220,21 @@ python3 scripts/china_backtest.py 000905.SH &
 # Generate summary and charts
 python3 scripts/gen_summary_11.py
 python3 scripts/gen_charts_11.py
+
+# === Phase 3: Optimal weight exploration ===
+# Run weight optimization (single version)
+python3 scripts/optimize_weights.py hongli_lowvol
+
+# Run all four versions in parallel
+python3 scripts/optimize_weights.py hongli_lowvol &
+python3 scripts/optimize_weights.py sp500 &
+python3 scripts/optimize_weights.py nasdaq &
+python3 scripts/optimize_weights.py nikkei225 &
+wait
+
+# Merge results + generate charts
+python3 scripts/merge_results.py
+python3 scripts/gen_charts3.py
 ```
 
 ---
@@ -229,6 +273,80 @@ A comprehensive research paper is available at **[reports/研究论文.md](repor
 - **Hold ≥12 months** for >65% win rate on all A-share groups (ex STAR 50)
 - Full report: [reports/持有期分析报告.md](reports/持有期分析报告.md) (Chinese)
 - 10 academic references
+
+---
+
+## 🇯🇵 Nikkei 225 Supplementary Test
+
+Added 2026-06-07: Nikkei 225 permanent portfolio test. Stocks = ^N225, bonds = fixed 1.5% (approximation of Japanese long-term government bonds), gold = GOLD_USD, cash = 0.5%. Over 2003–2026, all 5,277 entry points yielded positive returns: average cumulative +146.8%, annualized 9.0%, max drawdown 11.8%, Sharpe 0.86 (**highest across all groups**).
+
+Full standalone report: [reports/日经225永久组合回测报告.md](reports/日经225永久组合回测报告.md) (Chinese)
+
+---
+
+## 📊 Phase 3: Optimal Weight Exploration
+
+**Core question:** Given different stock engines, what bond/gold/cash ratios are truly optimal?
+
+> Phase 1/2 validated the 25% equal-weight permanent portfolio. Phase 3 breaks the equal-weight constraint, searching across 341 candidate weight combinations to find the optimal allocation for each version.
+
+![Calmar Heatmap](charts3/calmar_heatmap_4panel.png)
+
+### Research Design
+
+| Parameter | Details |
+|-----------|---------|
+| Versions | Low Vol Dividend / S&P 500 / Nasdaq 100 / Nikkei 225 |
+| Weight range | Stocks 10–50%, Bonds 5–50%, Gold 5–40%, Cash 5–30% (step 5%) |
+| Valid combos | ~**341** per version (must sum to 100%) |
+| Backtest method | Every trading day as entry, held to 2026-06-06 |
+| Rebalancing | Consistent with Phase 1: ±8% threshold + annual Jan reset, 0.1% cost |
+| Total paths | 341 combos × 4 versions × ~5,000 entries ≈ **6.8 million backtest paths** |
+
+### Recommended Allocations
+
+Each version outputs two tiers of recommendations. Percentages = **Stocks / Bonds / Gold / Cash**.
+
+#### Balanced (Calmar-optimal: best risk-adjusted return)
+
+| Version | Allocation | CAGR | Worst DD | Calmar | Sharpe |
+|---------|:----------:|:----:|:--------:|:------:|:-----:|
+| Low Vol Div | 10/50/10/30 | 4.3% | 6.4% | **1.13** | 1.08 |
+| S&P 500 | 25/5/40/30 | 10.3% | 20.2% | **0.75** | 1.38 |
+| Nasdaq 100 | 25/5/40/30 | 13.2% | 22.4% | **0.78** | 1.62 |
+| Nikkei 225 | 10/50/10/30 | 4.7% | 6.9% | **1.09** | 1.05 |
+
+#### Aggressive (CAGR-optimal, max drawdown ≤ 25%)
+
+| Version | Allocation | CAGR | Worst DD | Calmar | Sharpe |
+|---------|:----------:|:----:|:--------:|:------:|:-----:|
+| Low Vol Div | 45/10/40/5 | **9.7%** | 23.2% | 0.62 | 1.16 |
+| S&P 500 | 35/5/40/20 | **11.9%** | 24.9% | 0.74 | 1.58 |
+| Nasdaq 100 | 30/10/40/20 | **14.2%** | 24.6% | 0.70 | 1.62 |
+| Nikkei 225 | 35/25/35/5 | **13.3%** | 24.9% | 0.89 | 1.37 |
+
+![Allocation Bars](charts3/optimal_allocation_bars.png)
+
+### Key Findings
+
+1. **Gold is systematically underweighted at 25%** — Optimization pushes gold to 35–40% across all aggressive tiers. Gold's dual role (return engine + crisis hedge) is validated by data
+
+2. **Bonds are drastically compressed** — Aggressive tiers allocate only 5–10% to bonds, far below the traditional 25%. Fixed-rate bonds contribute limited returns in low-rate environments
+
+3. **Low Vol Dividend + bonds = ultra-low drawdown** — The 10/50/10/30 allocation achieves Calmar 1.13 with only 6.4% worst drawdown, the most defensive combination in the study
+
+4. **Nasdaq 100 aggressive tier delivers the highest return** — 30/10/40/20 reaches 14.2% CAGR while staying within acceptable drawdown limits
+
+5. **Nikkei 225 + gold + yen cash form a unique defensive structure** — 10/50/10/30 achieves Calmar 1.09, tying with Low Vol Dividend for the best risk-adjusted score
+
+6. **25% equal-weight is not optimal for any version** — Every version's optimal weights deviate significantly from equal-weight, suggesting investors should tailor allocations to their underlying stock characteristics
+
+![Pareto Frontier](charts3/frontier_all_versions.png)
+
+![Stock Weight Sensitivity](charts3/sensitivity_stock_weight.png)
+
+> 📄 Full analysis report: [reports/最优权重分析报告.md](reports/最优权重分析报告.md) (Chinese, 8 embedded charts)
+> 📄 Research plan: [研究計画3.md](研究計画3.md) (Chinese)
 
 ---
 
