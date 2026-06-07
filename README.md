@@ -6,7 +6,8 @@
 >
 > This project answers these questions with a daily-frequency backtest of **11 portfolio groups** across **~40,000 entry points** over 23 years (2003–2026).
 
-> **📄 Research paper:** [reports/研究论文.md](reports/研究论文.md) (Chinese, with 10 academic references)
+> **📄 Research paper:** [reports/研究论文.md](reports/研究论文.md) (Phase 1/2, with 10 academic references)
+> **📄 Weight optimization paper:** [reports/最优权重分析报告.md](reports/最优权重分析报告.md) (Phase 3, 8 charts, 341 weight combos)
 > **📖 中文版:** [README_ZH.md](README_ZH.md)
 
 ---
