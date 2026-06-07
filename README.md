@@ -2,9 +2,10 @@
 
 > Can you invest on **any random day** and still come out ahead?  
 > How long must you hold a permanent portfolio to have **>90% chance of profit**?  
-> Does the "25% stocks + 25% bonds + 25% gold + 25% cash" formula work in **China A-shares**?
+> Does the "25% stocks + 25% bonds + 25% gold + 25% cash" formula work in **China A-shares**?  
+> **And if we break the 25% rule — what weights are truly optimal for each stock engine?**
 >
-> This project answers these questions with a daily-frequency backtest of **11 portfolio groups** across **~40,000 entry points** over 23 years (2003–2026).
+> This project answers these questions across **three phases**: Phase 1 validated 25% equal-weight on **12 portfolio groups** (~40,000 entry points, 2003–2026); Phase 2 confirmed 24-month win rates >90%; Phase 3 broke the equal-weight constraint with a **341-combo grid search** across 4 versions.
 
 > **📄 Research paper:** [reports/研究论文.md](reports/研究论文.md) (Phase 1/2, with 10 academic references)
 > **📄 Weight optimization paper:** [reports/最优权重分析报告.md](reports/最优权重分析报告.md) (Phase 3, 8 charts, 341 weight combos)
