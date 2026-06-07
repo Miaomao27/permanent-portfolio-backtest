@@ -158,6 +158,72 @@
 
 ---
 
+## 📊 第三阶段：最优权重探索
+
+**核心问题：不同的股票引擎，应该搭配怎样的债券/黄金/现金比例才是最优的？**
+
+> Phase 1/2 验证了25%等权永久组合的稳健性。Phase 3 突破等权限制，在341个候选权重组合中寻找每个版本的最优配置。
+
+![Calmar热力图](charts3/calmar_heatmap_4panel.png)
+
+### 研究设计
+
+| 配置项 | 说明 |
+|--------|------|
+| 版本 | 红利低波 / 标普500 / 纳指100 / 日经225 |
+| 权重范围 | 股票10-50%、债券5-50%、黄金5-40%、现金5-30%（步长5%） |
+| 有效组合 | 每版约 **341个** 权重组合（四者之和=100%） |
+| 回测方式 | 每个权重组合 **每日入场**，持有至2026-06-06 |
+| 再平衡 | 与Phase 1一致：±8%阈值 + 每年1月强制，成本0.1% |
+| 总计算量 | 341组 × 4版本 × ~5,000入场点 ≈ **680万条回测路径** |
+
+### 三档推荐配置
+
+每个版本根据优化目标输出三档配置。百分比为 **股票/债券/黄金/现金**。
+
+#### 均衡型：Calmar比率最优（收益/回撤性价比最高）
+
+| 版本 | 配置 | 年化收益 | 最差回撤 | Calmar | 夏普 |
+|------|:----:|:--------:|:--------:|:------:|:----:|
+| 红利低波 | 10/50/10/30 | 4.3% | 6.4% | **1.13** | 1.08 |
+| 标普500 | 25/5/40/30 | 10.3% | 20.2% | **0.75** | 1.38 |
+| 纳指100 | 25/5/40/30 | 13.2% | 22.4% | **0.78** | 1.62 |
+| 日经225 | 10/50/10/30 | 4.7% | 6.9% | **1.09** | 1.05 |
+
+#### 进取型：年化收益最高（约束最差回撤≤25%）
+
+| 版本 | 配置 | 年化收益 | 最差回撤 | Calmar | 夏普 |
+|------|:----:|:--------:|:--------:|:------:|:----:|
+| 红利低波 | 45/10/40/5 | **9.7%** | 23.2% | 0.62 | 1.16 |
+| 标普500 | 35/5/40/20 | **11.9%** | 24.9% | 0.74 | 1.58 |
+| 纳指100 | 30/10/40/20 | **14.2%** | 24.6% | 0.70 | 1.62 |
+| 日经225 | 35/25/35/5 | **13.3%** | 24.9% | 0.89 | 1.37 |
+
+![三档配置对比](charts3/optimal_allocation_bars.png)
+
+### 关键发现
+
+1. **黄金权重被系统性低估** — 均衡型中黄金占40%（远超等权25%），进取型35-40%。黄金的对冲价值在优化中得到了数据验证
+
+2. **债券权重被大幅压缩** — 进取型中债券仅5-10%，远低于传统25%。固定利率债券在低利率环境中的收益贡献有限
+
+3. **红利低波+债券=超低回撤** — 10/50/10/30 配置实现Calmar 1.13、最差回撤仅6.4%，为全场最稳健组合
+
+4. **纳指100进取型收益最高** — 30/10/40/20 配置年化14.2%，在可接受回撤范围内最大化增长
+
+5. **日经225 + 黄金 + 日元现金形成独特防御** — 均衡型10/50/10/30 Calmar达1.09，与红利低波版并列最优
+
+6. **等权25%并非最优** — 四个版本的最优权重均显著偏离等权配置，暗示投资者应根据底层股票特征调整资产配比
+
+![帕累托前沿对比](charts3/frontier_all_versions.png)
+
+![股票权重敏感度](charts3/sensitivity_stock_weight.png)
+
+> 📄 完整分析报告：[reports/最优权重分析报告.md](reports/最优权重分析报告.md)
+> 📄 研究计划：[研究计划3.md](研究计划3.md)
+
+---
+
 ## 📁 目录结构
 
 ```
@@ -202,7 +268,11 @@
 │   ├── sharpe_compare.png           # 夏普比率对比
 │   └── risk_return_scatter.png      # 风险-收益散点图
 ├── reports/
-│   └── 统计分析报告.md               # 完整分析报告
+│   ├── 统计分析报告.md               # Phase 1 完整分析报告
+│   ├── 持有期分析报告.md             # Phase 2 持有期分析
+│   ├── 日经225永久组合回测报告.md     # 日经225独立报告
+│   ├── 最优权重分析报告.md           # Phase 3 完整分析
+│   └── 最优权重推荐摘要.md           # Phase 3 精炼推荐
 ├── scripts/                          # 回测与处理脚本
 │   ├── backtest_full.py             # 完整回测引擎（原始版）
 │   ├── backtest_continue.py         # 延续脚本
@@ -216,7 +286,30 @@
 │   ├── save_h30269.py               # 红利低波采集
 │   ├── fetch_dividend_indices.py    # 综合采集脚本
 │   ├── import_to_mysql.py           # MySQL入库
-│   └── prepare_data.py              # 数据清洗对齐
+│   ├── prepare_data.py              # 数据清洗对齐
+│   ├── optimize_weights.py          # Phase 3 权重优化引擎
+│   ├── merge_results.py             # Phase 3 结果合并
+│   └── gen_charts3.py               # Phase 3 图表生成
+├── results3/                         # Phase 3 结果
+│   ├── hongli_lowvol/
+│   │   ├── grid_results.csv         # 红利低波全网格（341组）
+│   │   └── top_recommendations.csv  # 三档推荐
+│   ├── sp500/
+│   │   ├── grid_results.csv
+│   │   └── top_recommendations.csv
+│   ├── nasdaq/
+│   │   ├── grid_results.csv
+│   │   └── top_recommendations.csv
+│   ├── nikkei225/
+│   │   ├── grid_results.csv
+│   │   └── top_recommendations.csv
+│   ├── optimal_summary.csv          # 四版本汇总
+│   └── pareto_frontiers.csv         # 帕累托前沿
+├── charts3/                          # Phase 3 图表
+│   ├── calmar_heatmap_4panel.png    # 四版Calmar热力图
+│   ├── frontier_all_versions.png    # 帕累托前沿对比
+│   ├── optimal_allocation_bars.png  # 三档配置柱状图
+│   └── sensitivity_stock_weight.png # 股票权重敏感度
 └── logs/                             # 运行日志
 ```
 
@@ -238,6 +331,21 @@ python3 scripts/gen_summary_11.py
 
 # 5. 生成图表
 python3 scripts/gen_charts_11.py
+
+# === Phase 3: 最优权重探索 ===
+# 6. 运行权重优化（单版本）
+python3 scripts/optimize_weights.py hongli_lowvol
+
+# 7. 并行跑四个版本
+python3 scripts/optimize_weights.py hongli_lowvol &
+python3 scripts/optimize_weights.py sp500 &
+python3 scripts/optimize_weights.py nasdaq &
+python3 scripts/optimize_weights.py nikkei225 &
+wait
+
+# 8. 合并结果 + 生成图表
+python3 scripts/merge_results.py
+python3 scripts/gen_charts3.py
 ```
 
 ---
