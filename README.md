@@ -202,6 +202,19 @@ permanent-portfolio-backtest/
 │   ├── frontier_all_versions.png    # Pareto frontier comparison
 │   ├── optimal_allocation_bars.png  # Tier allocation bars
 │   └── sensitivity_stock_weight.png # Stock weight sensitivity
+├── 蒙特卡洛模拟/                    # Monte Carlo simulation
+│   ├── mc_core.py                  # Core simulation engine
+│   ├── mc_new.py                   # New allocation engine
+│   ├── results_保守.csv            # Quantile tables by age
+│   ├── results_中位.csv
+│   ├── results_乐观.csv
+│   ├── charts/                     # Visualization
+│   │   ├── 01_年龄_资产曲线.png
+│   │   ├── 02_60岁资产分布直方图.png
+│   │   └── 03_千万达成概率年龄演进.png
+│   ├── 蒙特卡洛模拟分析报告.md     # Full report
+│   ├── 新旧配比对比报告.md         # Comparison report
+│   └── 模拟计划.md
 └── logs/                             # Run logs
 ```
 
@@ -348,6 +361,41 @@ Each version outputs two tiers of recommendations. Percentages = **Stocks / Bond
 
 > 📄 Full analysis report: [reports/最优权重分析报告.md](reports/最优权重分析报告.md) (Chinese, 8 embedded charts)
 > 📄 Research plan: [研究計画3.md](研究計画3.md) (Chinese)
+
+---
+
+## 📊 Phase 4: Monte Carlo Simulation — 34-Year Forward DCA Projection
+
+**Core question:** Can the user's variant (Low Vol Dividend 30% + S&P 500 30% + Resources/Energy 20% + Gold 12% + Bonds+Cash 8%) reach a 10M CNY target over 34 years via escalating DCA (2,000→4,000/month)?
+
+| Scenario | Portfolio CAGR | Median at 60 | 10M Probability |
+|:--------:|:--------------:|:------------:|:---------------:|
+| Conservative (−0.3σ) | 5.0% | ¥3.51M | 0.1% |
+| **Moderate (most likely)** | **6.5%** | **¥4.93M** | **2.3%** |
+| Optimistic (+0.3σ) | 8.2% | ¥7.01M | 16.3% |
+
+### Key Findings
+
+1. **Median at 60 is ¥4.93M** — only 49% of the 10M target. The goal is practically unreachable under the current DCA plan
+2. **Tail safety across all scenarios** — worst 5% still has ¥2.10-3.98M, never a principal loss
+3. **Last 10 years contribute 45%+ of total wealth** — compounding accelerates after 50; quitting early is the biggest mistake
+4. **Savings rate > return rate** — doubling monthly contributions from 4K→8K doubles terminal value to ¥9.86M, while chasing higher returns relies on luck
+
+### Allocation Comparison (User Variant vs Classic 25%×4)
+
+| Metric | User Variant | Classic 25%×4 |
+|:-------|:-----------:|:-------------:|
+| Portfolio CAGR (moderate) | **6.5%** | **5.4%** |
+| Monthly volatility | 2.43% | **1.63%** |
+| Median at 60 | **¥4.93M** | ¥4.08M |
+| 10M probability | **2.3%** | 0.0% |
+
+> The classic 25%×4 is more stable but delivers lower terminal value. The user variant trades acceptable volatility for significantly higher expected wealth.
+
+Full reports (Chinese):
+- `蒙特卡洛模拟/蒙特卡洛模拟分析报告.md` — 34-year forward analysis
+- `蒙特卡洛模拟/新旧配比对比报告.md` — Full comparison of both allocations
+- `蒙特卡洛模拟/charts/` — 3 charts (age-asset curves, distribution histogram, probability evolution)
 
 ---
 
